@@ -48,8 +48,8 @@ This project involves consuming CVE data from the National Vulnerability Databas
 6. **API Documentation**:
    -Get CVE List
 
-    Endpoint: /cves/list
-    Method: GET
+   - Endpoint: /cves/list
+   - Method: GET
 
    {
   "total": 1000,
@@ -60,6 +60,40 @@ This project involves consuming CVE data from the National Vulnerability Databas
       "published_date": "1999-01-01",
       "last_modified_date": "2023-01-01",
       "status": "Analyzed"
+    },
+    ...
+  ]
+}
+
+Get CVE Details
+
+    - Endpoint: /cves/<cve_id>
+
+    - Method: GET
+
+    {
+  "cve_id": "CVE-1999-0095",
+  "description": "Test CVE",
+  "published_date": "1999-01-01",
+  "last_modified_date": "2023-01-01",
+  "status": "Analyzed",
+  "cvss_metrics": {
+    "severity": "HIGH",
+    "base_score": 9.8,
+    "vector_string": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
+    "access_vector": "NETWORK",
+    "access_complexity": "LOW",
+    "authentication": "NONE",
+    "confidentiality_impact": "COMPLETE",
+    "integrity_impact": "COMPLETE",
+    "exploitability_score": 3.9,
+    "impact_score": 10.0
+  },
+  "cpe_details": [
+    {
+      "criteria": "cpe:2.3:a:eric_allman:sendmail:5.58:*:*:*:*:*:*:*",
+      "match_criteria_id": "1D07F493-9C8D-44A4-8652-F28B46CBA27C",
+      "vulnerable": true
     },
     ...
   ]
