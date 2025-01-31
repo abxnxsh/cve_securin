@@ -25,9 +25,11 @@ This project involves consuming CVE data from the National Vulnerability Databas
    - Provides a "Results Per Page" dropdown to control the number of records displayed.
    - Redirects to a detailed view when a CVE row is clicked.
   
-     ![image](https://github.com/user-attachments/assets/5eb5ced0-fd49-470a-af68-b6f56bd78fd0)
+      ![image](https://github.com/user-attachments/assets/a08cf207-243b-4379-9655-ccfffebf341e)
 
-     ![image](https://github.com/user-attachments/assets/a08cf207-243b-4379-9655-ccfffebf341e)
+      ![image](https://github.com/user-attachments/assets/5eb5ced0-fd49-470a-af68-b6f56bd78fd0)
+
+     
 
 3. **Periodic Synchronization**:
    - Synchronizes CVE data periodically (every 6 hours) using a background scheduler.
@@ -40,7 +42,28 @@ This project involves consuming CVE data from the National Vulnerability Databas
 
 5. **Unit Tests**:
    - Includes well-defined unit tests for database initialization, data fetching, and route handling.
+     
       ![image](https://github.com/user-attachments/assets/dba3b665-6adb-4bcf-a8a8-881cc05b169b)
+
+6. **API Documentation**:
+   -Get CVE List
+
+    Endpoint: /cves/list
+    Method: GET
+
+   {
+  "total": 1000,
+  "cves": [
+    {
+      "id": "CVE-1999-0095",
+      "description": "Test CVE",
+      "published_date": "1999-01-01",
+      "last_modified_date": "2023-01-01",
+      "status": "Analyzed"
+    },
+    ...
+  ]
+}
 
 
 
