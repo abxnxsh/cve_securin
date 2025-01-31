@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CVE Details: {{ cve_id }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            margin: 30px;
+            font-size: 1em;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.6em;
+            margin-bottom: 20px;
+        }
+
+        .description {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+        }
+
+        .section-headings {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .cvss-metrics, .scores, .impact-metrics {
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+
+        .scores {
+            margin-left: 5px;
+        }
+
+        .cpe {
+            margin-top: 20px;
+            margin-left: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 1em;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #f4f4f4;
+            font-weight: bold;
+        }
+
+        td {
+            padding: 10px;
+        }
+
+        .cpe h3 {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .description p {
+            font-size: 1.1em;
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        .scores h1 {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>CVE Details: {{ cve_id }}</h1>
+    
+    <div class="description">
+        <strong>Description:</strong>
+        <p>{{ description }}</p>
+    </div>
+
+    <div class="section-headings">
+        <span>CVSS2 Metrics:</span>
+    </div>
+
+    <div class="cvss-metrics">
+        <div>
+            <strong>Severity:</strong> {{ cvss_metrics.severity }}
+        </div>
+
+        <div>
+            <strong>Base Score:</strong> {{ cvss_metrics.base_score }}
+        </div>
+
+        <div>
+            <strong>Vector String:</strong> {{ cvss_metrics.vector_string }}
+        </div>
+    </div>
+
+    <div class="impact-metrics">
+        <table>
+            <tr>
+                <th>Access Vector</th>
+                <th>Access Complexity</th>
+                <th>Authentication</th>
+                <th>Confidentiality Impact</th>
+                <th>Integrity Impact</th>
+            </tr>
+            <tr>
+                <td>{{ cvss_metrics.access_vector }}</td>
+                <td>{{ cvss_metrics.access_complexity }}</td>
+                <td>{{ cvss_metrics.authentication }}</td>
+                <td>{{ cvss_metrics.confidentiality_impact }}</td>
+                <td>{{ cvss_metrics.integrity_impact }}</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="scores">
+        <h1>Scores:</h1>
+        <div>
+            <strong>Exploitability Score:</strong> {{ cvss_metrics.exploitability_score }}
+        </div>
+
+        <div>
+            <strong>Impact Score:</strong> {{ cvss_metrics.impact_score }}
+        </div>
+    </div>
+
+    <div class="cpe">
+        <h3>CPE</h3>
+        {% if cpe_details %}
+        <table>
+            <tr>
+                <th>Criteria</th>
+                <th>Match Criteria ID</th>
+                <th>Vulnerable</th>
+            </tr>
+            {% for cpe in cpe_details %}
+            <tr>
+                <td>{{ cpe.criteria }}</td>
+                <td>{{ cpe.match_criteria_id }}</td>
+                <td>{{ cpe.vulnerable }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No CPE details available.</p>
+        {% endif %}
+    </div>
+</body>
+</html>
