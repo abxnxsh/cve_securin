@@ -49,7 +49,8 @@ This project involves consuming CVE data from the National Vulnerability Databas
    -Get CVE List
 
    - Endpoint: /cves/list
-   - Method: GET
+
+    - Method: GET
 
    {
   "total": 1000,
@@ -71,7 +72,7 @@ Get CVE Details
 
     - Method: GET
 
-    {
+{
   "cve_id": "CVE-1999-0095",
   "description": "Test CVE",
   "published_date": "1999-01-01",
