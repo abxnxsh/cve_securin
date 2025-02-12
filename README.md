@@ -35,9 +35,15 @@ This project involves consuming CVE data from the National Vulnerability Databas
      - Published Date (ascending/descending)
      - Last Modified Date (ascending/descending)
 
+   ![image](https://github.com/user-attachments/assets/4b5abf26-9812-4574-adf6-0fc643c93409)
+
+
 4. **Filtering**:
    - Filter CVE records by:
      - Year (e.g., show only CVEs published in 2023).
+    
+   ![image](https://github.com/user-attachments/assets/affee6b0-ab5a-49aa-bdd8-deccd5c7a7a0)
+
 
      
 
