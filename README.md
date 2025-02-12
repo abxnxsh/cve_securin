@@ -16,7 +16,8 @@ This project involves consuming CVE data from the National Vulnerability Databas
 1. **Fetch and Store CVE Data**:
    - Fetches CVE data from the NVD API in chunks using pagination.
    - Stores the data in a PostgreSQL database with tables for CVEs, CVSS metrics, and CPE detail
-![image](https://github.com/user-attachments/assets/f8999ea0-67f7-4999-8c0e-6c780ac02a12)
+![image](https://github.com/user-attachments/assets/4aeee4d1-5e42-4d76-9b14-61dacaf8ee2c)
+
 
 
 2. **User Interface**:
