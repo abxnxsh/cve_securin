@@ -117,6 +117,38 @@ Get CVE Details
 }
 
 
+    Fetch All CVEs:
+
+        To fetch the first 10 CVEs sorted by published date in descending order:
+        Copy
+
+        GET /cves/list
+
+        To fetch CVEs published in 2023:
+        Copy
+
+        GET /cves/list?year=2023
+
+        To fetch 50 CVEs per page on page 2:
+        Copy
+
+        GET /cves/list?page=2&per_page=50
+
+    Fetch CVE Details:
+
+        To fetch details for a specific CVE:
+        Copy
+
+        GET /cves/CVE-2023-1234
+
+    Synchronize CVE Data:
+
+        To manually synchronize CVE data:
+        Copy
+
+        POST /cves/sync
+
+
 
 
 
