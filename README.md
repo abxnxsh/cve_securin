@@ -30,7 +30,12 @@ This project involves consuming CVE data from the National Vulnerability Databas
 
       ![image](https://github.com/user-attachments/assets/5eb5ced0-fd49-470a-af68-b6f56bd78fd0)
 
-3. **Sorting**:
+
+   **Vulnerability-Free**
+   SQL Injection :
+   - Uses parameterized queries (eg. cur.execute) which prevents SQL injection.
+
+4. **Sorting**:
    - Sort CVE records by:
      - Published Date (ascending/descending)
      - Last Modified Date (ascending/descending)
@@ -38,7 +43,7 @@ This project involves consuming CVE data from the National Vulnerability Databas
    ![image](https://github.com/user-attachments/assets/4b5abf26-9812-4574-adf6-0fc643c93409)
 
 
-4. **Filtering**:
+5. **Filtering**:
    - Filter CVE records by:
      - Year (e.g., show only CVEs published in 2023).
     
@@ -47,7 +52,7 @@ This project involves consuming CVE data from the National Vulnerability Databas
 
      
 
-5. **Periodic Synchronization**:
+6. **Periodic Synchronization**:
    - Synchronizes CVE data periodically (every 6 hours) using a background scheduler.
   
    ![image](https://github.com/user-attachments/assets/9702546a-1677-4a67-b350-30602b93087c)
