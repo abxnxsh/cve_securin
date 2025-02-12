@@ -30,9 +30,18 @@ This project involves consuming CVE data from the National Vulnerability Databas
 
       ![image](https://github.com/user-attachments/assets/5eb5ced0-fd49-470a-af68-b6f56bd78fd0)
 
+3. **Sorting**:
+   - Sort CVE records by:
+     - Published Date (ascending/descending)
+     - Last Modified Date (ascending/descending)
+
+4. **Filtering**:
+   - Filter CVE records by:
+     - Year (e.g., show only CVEs published in 2023).
+
      
 
-3. **Periodic Synchronization**:
+5. **Periodic Synchronization**:
    - Synchronizes CVE data periodically (every 6 hours) using a background scheduler.
   
    ![image](https://github.com/user-attachments/assets/9702546a-1677-4a67-b350-30602b93087c)
@@ -41,12 +50,12 @@ This project involves consuming CVE data from the National Vulnerability Databas
    - `/cves/list`: Returns a paginated list of CVEs with filtering options.
    - `/cves/<cve_id>`: Returns detailed information about a specific CVE.
 
-5. **Unit Tests**:
+6. **Unit Tests**:
    - Includes well-defined unit tests for database initialization, data fetching, and route handling.
      
       ![image](https://github.com/user-attachments/assets/dba3b665-6adb-4bcf-a8a8-881cc05b169b)
 
-6. **API Documentation**:
+7. **API Documentation**:
    -Get CVE List
 
    - Endpoint: /cves/list
