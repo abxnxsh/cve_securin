@@ -26,7 +26,7 @@ This project involves consuming CVE data from the National Vulnerability Databas
    - Provides a "Results Per Page" dropdown to control the number of records displayed.
    - Redirects to a detailed view when a CVE row is clicked.
   
-      ![image](https://github.com/user-attachments/assets/a08cf207-243b-4379-9655-ccfffebf341e)
+     
 
       ![image](https://github.com/user-attachments/assets/5eb5ced0-fd49-470a-af68-b6f56bd78fd0)
 
