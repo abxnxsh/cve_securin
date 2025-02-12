@@ -24,39 +24,112 @@
         }
         label {
             margin-top: 20px;
-            display: block;
+            display: inline-block;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-between; 
+            align-items: center; 
+            margin-top: 20px;
+        }
+        .pagination {
+            display: flex;
+            align-items: center;
+        }
+        .pagination button {
+            margin: 0 2px;
+            padding: 5px 10px;
+            cursor: pointer;
+            border: 1px solid #ddd;
+            background-color: #f4f4f4;
+            border-radius: 3px;
+        }
+        .pagination button:disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+        .pagination button.active {
+            background-color: #007bff;
+            color: white;
+            border-color: #007bff;
         }
     </style>
 </head>
 <body>
     <h1>CVE List</h1>
     <h3 style="text-align: left;">Total CVE Records: {{ total_records }}</h3>
+
+
+    <label>
+        Sort By:
+        <select id="sort-by" onchange="fetchCVEData()">
+            <option value="published_date">Published Date</option>
+            <option value="last_modified_date">Last Modified Date</option>
+        </select>
+    </label>
+
+    <label>
+        Sort Order:
+        <select id="sort-order" onchange="fetchCVEData()">
+            <option value="desc">Descending</option>
+            <option value="asc">Ascending</option>
+        </select>
+    </label>
+
+    <label>
+        Filter by Year:
+        <input type="text" id="year" onchange="fetchCVEData()">
+    </label>
+
+
+
     <table>
         <thead>
             <tr>
                 <th>CVE ID</th>
+                <th>Identifier</th>
                 <th>Published Date</th>
                 <th>Last Modified Date</th>
                 <th>Status</th>
             </tr>
         </thead>
         <tbody id="cve-table">
-            
+           
         </tbody>
     </table>
 
-    <label>Results Per Page:
-        <select id="per-page" onchange="fetchCVEData()">
-            <option value="10">10</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-        </select>
-    </label>
+    <div class="controls">
+       
+        <label>
+            Results Per Page:
+            <select id="per-page" onchange="fetchCVEData()">
+                <option value="10">10</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+        </label>
+
+        <div class="pagination">
+            <button id="prev-page" onclick="changePage(currentPage - 1)" disabled>←</button>
+            <div id="page-numbers">
+               
+            </div>
+            <button id="next-page" onclick="changePage(currentPage + 1)" disabled>→</button>
+        </div>
+    </div>
 
     <script>
+        let currentPage = 1;
+        let totalPages = 1;
+        let currentBatch = 1; 
+
         async function fetchCVEData(page = 1) {
             const perPage = document.getElementById("per-page").value;
-            const response = await fetch(`/cves/list?page=${page}&per_page=${perPage}`);
+            const sortBy = document.getElementById("sort-by").value;
+            const sortOrder = document.getElementById("sort-order").value;
+            const year = document.getElementById("year").value;
+
+            const response = await fetch(`/cves/list?page=${page}&per_page=${perPage}&sort_by=${sortBy}&sort_order=${sortOrder}&year=${year}`);
             const data = await response.json();
             const tableBody = document.getElementById("cve-table");
             tableBody.innerHTML = "";
@@ -69,6 +142,10 @@
                 const cveIdCell = document.createElement("td");
                 cveIdCell.textContent = cve[0];
                 row.appendChild(cveIdCell);
+
+                const cveIdentCell = document.createElement("td");
+                cveIdentCell.textContent = cve[1];
+                row.appendChild(cveIdentCell);
 
                 const publishedDateCell = document.createElement("td");
                 publishedDateCell.textContent = cve[2];
@@ -84,9 +161,49 @@
 
                 tableBody.appendChild(row);
             });
+
+   
+            totalPages = Math.ceil(data.total / perPage);
+            updatePaginationControls(page, totalPages);
         }
 
+        function updatePaginationControls(currentPage, totalPages) {
+            const pageNumbers = document.getElementById("page-numbers");
+            pageNumbers.innerHTML = "";
+
     
+            const batchSize = 4;
+            const startPage = (currentBatch - 1) * batchSize + 1;
+            const endPage = Math.min(startPage + batchSize - 1, totalPages);
+
+            
+            for (let i = startPage; i <= endPage; i++) {
+                const pageButton = document.createElement("button");
+                pageButton.textContent = i;
+                pageButton.disabled = i === currentPage;
+                pageButton.classList.toggle("active", i === currentPage);
+                pageButton.onclick = () => changePage(i);
+                pageNumbers.appendChild(pageButton);
+            }
+
+            
+            document.getElementById("prev-page").disabled = currentPage === 1;
+            document.getElementById("next-page").disabled = currentPage === totalPages;
+        }
+
+        function changePage(newPage) {
+            if (newPage < 1 || newPage > totalPages) return;
+
+            const batchSize = 4;
+            if (newPage > currentBatch * batchSize) {
+                currentBatch++;
+            } else if (newPage <= (currentBatch - 1) * batchSize) {
+                currentBatch--; 
+            }
+
+            currentPage = newPage;
+            fetchCVEData(currentPage);
+        }
         fetchCVEData();
     </script>
 </body>

@@ -7,7 +7,7 @@ def get_db_connection():
             host='localhost',
             database='infodb',
             user='postgres',  
-            password='1234'  
+            password='1234'     
         )
         return conn
     except Exception as e:

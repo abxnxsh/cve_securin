@@ -21,7 +21,6 @@ def init_db():
     conn = get_db_connection()
     cur = conn.cursor()
 
-    
     cur.execute(
         """
         CREATE TABLE IF NOT EXISTS cves (
@@ -33,7 +32,6 @@ def init_db():
         );
     """
     )
-
 
     cur.execute(
         """
@@ -54,7 +52,6 @@ def init_db():
     """
     )
 
-
     cur.execute(
         """
         CREATE TABLE IF NOT EXISTS cpe (
@@ -72,12 +69,12 @@ def init_db():
     conn.close()
 
 
-
 init_db()
 
 
 NVD_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0"
 API_KEY = "c3ec834e-d046-4348-9687-d0dc11ddf155"
+
 
 def fetch_and_store_cves():
     start_index = 0
@@ -127,7 +124,7 @@ def fetch_and_store_cves():
                     break
 
                 cve_id = cve["cve"]["id"]
-                description = cve["cve"]["descriptions"][0]["value"]
+                description = cve["cve"]["sourceIdentifier"]
                 published_date = cve["cve"]["published"]
                 last_modified_date = cve["cve"]["lastModified"]
                 status = cve["cve"]["vulnStatus"]
@@ -186,7 +183,6 @@ def fetch_and_store_cves():
                     for config in cve["cve"]["configurations"]:
                         for node in config["nodes"]:
                             for cpe_match in node["cpeMatch"]:
-
                                 cur.execute(
                                     """
                                     INSERT INTO cpe (cve_id, criteria, match_criteria_id, vulnerable)
@@ -244,6 +240,9 @@ def home():
 def cve_list():
     page = int(request.args.get("page", 1))
     per_page = int(request.args.get("per_page", 10))
+    sort_by = request.args.get("sort_by", "published_date")
+    sort_order = request.args.get("sort_order", "desc")
+    year = request.args.get("year")
 
     conn = get_db_connection()
     cur = conn.cursor()
@@ -251,13 +250,13 @@ def cve_list():
     query = "SELECT * FROM cves"
     filters = []
 
-    if request.args.get("year"):
-        filters.append(f"published_date LIKE '{request.args.get('year')}%'")
+    if year:
+        filters.append(f"published_date LIKE '{year}%'")
 
     if filters:
         query += " WHERE " + " AND ".join(filters)
 
-    query += f" LIMIT {per_page} OFFSET {(page-1) * per_page};"
+    query += f" ORDER BY {sort_by} {sort_order} LIMIT {per_page} OFFSET {(page-1) * per_page};"
     cur.execute(query)
     cves = cur.fetchall()
 
@@ -324,7 +323,6 @@ def cve_detail(cve_id):
 scheduler = BackgroundScheduler()
 scheduler.add_job(fetch_and_store_cves, "interval", hours=6)
 scheduler.start()
-
 
 if __name__ == "__main__":
     fetch_and_store_cves()
