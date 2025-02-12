@@ -32,6 +32,7 @@ This project involves consuming CVE data from the National Vulnerability Databas
 
 
    **Vulnerability-Free**
+
    SQL Injection :
    - Uses parameterized queries (eg. cur.execute) which prevents SQL injection.
 
