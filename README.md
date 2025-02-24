@@ -1,4 +1,4 @@
-# Assessment
+![image](https://github.com/user-attachments/assets/10ecb83c-e8e2-4a5e-a9d1-65f30a52d193)# Assessment
 
 ## **About**
 
@@ -49,13 +49,20 @@ This project involves consuming CVE data from the National Vulnerability Databas
 5. **Filtering**:
    - Filter CVE records by:
      - Year (e.g., show only CVEs published in 2023).
-    
-   ![image](https://github.com/user-attachments/assets/affee6b0-ab5a-49aa-bdd8-deccd5c7a7a0)
+     - ![image](https://github.com/user-attachments/assets/b68ab02c-6229-40a4-bd5c-08ff1b75cf35)
+
+
+    - CVSS Score (e.g., 7.5).
+    ![image](https://github.com/user-attachments/assets/71204e89-92ea-46b8-9664-a6e502b2fd79)
+
+    - CVE ID (e.g., CVE-2023-1234).
+    - ![image](https://github.com/user-attachments/assets/197e46c6-1385-4210-9e02-b275bd3b7887)
+
 
 
      
 
-6. **Periodic Synchronization**:
+7. **Periodic Synchronization**:
    - Synchronizes CVE data periodically (every 6 hours) using a background scheduler.
   
    ![image](https://github.com/user-attachments/assets/9702546a-1677-4a67-b350-30602b93087c)
