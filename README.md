@@ -87,92 +87,7 @@ This project involves consuming CVE data from the National Vulnerability Databas
       ![image](https://github.com/user-attachments/assets/dba3b665-6adb-4bcf-a8a8-881cc05b169b)
 
 7. **API Documentation**:
-   -Get CVE List
-
-   - Endpoint: /cves/list
-
-    - Method: GET
-
-   {
-  "total": 1000,
-  "cves": [
-    {
-      "id": "CVE-1999-0095",
-      "description": "Test CVE",
-      "published_date": "1999-01-01",
-      "last_modified_date": "2023-01-01",
-      "status": "Analyzed"
-    },
-    ...
-  ]
-}
-
-Get CVE Details
-
-    - Endpoint: /cves/<cve_id>
-
-    - Method: GET
-
-{
-  "cve_id": "CVE-1999-0095",
-  "description": "Test CVE",
-  "published_date": "1999-01-01",
-  "last_modified_date": "2023-01-01",
-  "status": "Analyzed",
-  "cvss_metrics": {
-    "severity": "HIGH",
-    "base_score": 9.8,
-    "vector_string": "AV:N/AC:L/Au:N/C:C/I:C/A:C",
-    "access_vector": "NETWORK",
-    "access_complexity": "LOW",
-    "authentication": "NONE",
-    "confidentiality_impact": "COMPLETE",
-    "integrity_impact": "COMPLETE",
-    "exploitability_score": 3.9,
-    "impact_score": 10.0
-  },
-  "cpe_details": [
-    {
-      "criteria": "cpe:2.3:a:eric_allman:sendmail:5.58:*:*:*:*:*:*:*",
-      "match_criteria_id": "1D07F493-9C8D-44A4-8652-F28B46CBA27C",
-      "vulnerable": true
-    },
-    ...
-  ]
-}
-
-
-    Fetch All CVEs:
-
-        To fetch the first 10 CVEs sorted by published date in descending order:
-        Copy
-
-        GET /cves/list
-
-        To fetch CVEs published in 2023:
-        Copy
-
-        GET /cves/list?year=2023
-
-        To fetch 50 CVEs per page on page 2:
-        Copy
-
-        GET /cves/list?page=2&per_page=50
-
-    Fetch CVE Details:
-
-        To fetch details for a specific CVE:
-        Copy
-
-        GET /cves/CVE-2023-1234
-
-    Synchronize CVE Data:
-
-        To manually synchronize CVE data:
-        Copy
-
-        POST /cves/sync
-
+  
 ## **Endpoints**
 
 | Method | Endpoint | Description |
@@ -239,3 +154,61 @@ Fetches a list of CVEs with optional pagination, sorting, and filtering.
     ]
 }
 ```
+## **CVE Details**
+### **`GET /cves/<cve_id>`**
+#### **Description**  
+Fetches detailed information about a specific CVE.
+
+#### **Path Parameter**
+| Parameter  | Type   | Description                        | Example           |
+|------------|--------|------------------------------------|-------------------|
+| `cve_id`   | `string` | The unique CVE identifier       | `CVE-2023-12345` |
+
+#### **Request Example**
+
+#### **Response Example**
+```json
+{
+    "id": "CVE-2023-12345",
+    "description": "Some vulnerability details",
+    "published_date": "2023-10-15",
+    "last_modified_date": "2024-02-01",
+    "status": "Published",
+    "cvss_metrics": {
+        "severity": "HIGH",
+        "base_score": 8.2,
+        "vector_string": "AV:N/AC:L/Au:N/C:P/I:P/A:P",
+        "exploitability_score": 3.9,
+        "impact_score": 4.5
+    },
+    "cpe": [
+        {
+            "criteria": "cpe:/o:linux:linux_kernel:5.4",
+            "match_criteria_id": "1234-abcd",
+            "vulnerable": true
+        }
+    ]
+}
+```
+## **Update CVE Data**
+### **`GET /cves/update`**
+#### **Description**  
+Triggers the process to fetch and store new CVEs from the NVD API.
+
+#### **Request Example**
+
+#### **Response Example**
+```json
+{
+    "message": "Fetching new CVEs from NVD API..."
+}
+```
+## **Error Responses**
+| Status Code | Message | Description |
+|------------|---------|-------------|
+| `400` | `"Bad Request"` | Invalid query parameters |
+| `404` | `"CVE not found"` | The requested CVE ID does not exist |
+| `500` | `"Internal Server Error"` | Database connection issues or API failures |
+
+
+
