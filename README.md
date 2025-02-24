@@ -53,7 +53,7 @@ This project involves consuming CVE data from the National Vulnerability Databas
 
 
     - CVSS Score (e.g., 7.5).
-    ![image](https://github.com/user-attachments/assets/71204e89-92ea-46b8-9664-a6e502b2fd79)
+    - ![image](https://github.com/user-attachments/assets/71204e89-92ea-46b8-9664-a6e502b2fd79)
 
     - CVE ID (e.g., CVE-2023-1234).
     - ![image](https://github.com/user-attachments/assets/197e46c6-1385-4210-9e02-b275bd3b7887)
