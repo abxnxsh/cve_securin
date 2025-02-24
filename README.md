@@ -53,14 +53,20 @@ This project involves consuming CVE data from the National Vulnerability Databas
 5. **Filtering**:
    - Filter CVE records by:
      - Date (e.g., show only CVEs published in 2023).
-     - ![image](https://github.com/user-attachments/assets/b68ab02c-6229-40a4-bd5c-08ff1b75cf35)
+   
+   - Filtering options for PUBLISHED date and LAST MODIDIFIED date.
+
+   - ![image](https://github.com/user-attachments/assets/450e8747-1efb-4504-8789-b10839fb2f7c)
 
 
     - CVSS Score (e.g., 7.5).
-    - ![image](https://github.com/user-attachments/assets/71204e89-92ea-46b8-9664-a6e502b2fd79)
 
     - CVE ID (e.g., CVE-2023-1234).
-    - ![image](https://github.com/user-attachments/assets/197e46c6-1385-4210-9e02-b275bd3b7887)
+  
+
+    - ![image](https://github.com/user-attachments/assets/38346bb1-d4bc-4da4-a4db-6d7e6405325e)
+
+
 
 
 
