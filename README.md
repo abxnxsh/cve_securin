@@ -195,8 +195,47 @@ Displays the total number of CVE records stored in the database.
     "total_records": 350
 }
 
+```
+
+## **CVE List**
+### **`GET /cves/list`**
+#### **Description**  
+Fetches a list of CVEs with optional pagination, sorting, and filtering.
+
+#### **Query Parameters**
+| Parameter      | Type    | Description                                      | Example                 |
+|---------------|--------|--------------------------------------------------|-------------------------|
+| `page`        | `int`   | Page number (default: 1)                         | `1`                     |
+| `per_page`    | `int`   | Number of records per page (default: 10)         | `20`                    |
+| `sort_by`     | `string` | Column to sort by (default: `published_date`)    | `last_modified_date`     |
+| `sort_order`  | `string` | Sort order: `asc` or `desc` (default: `desc`)   | `asc`                    |
+| `filter_type` | `string` | Filter type (`published_date` or `last_modified_date`) | `published_date`   |
+| `year`        | `string` | Filter CVEs by year                              | `2023`                   |
+| `cvss_score`  | `float`  | Filter CVEs by CVSS base score                   | `7.5`                    |
+| `cve_id`      | `string` | Fetch a specific CVE                             | `CVE-2023-12345`         |
+
+#### **Request Example**
 
 
-
-
-
+#### **Response Example**
+```json
+{
+    "total": 500,
+    "cves": [
+        {
+            "id": "CVE-2023-12345",
+            "description": "Some vulnerability details",
+            "published_date": "2023-10-15",
+            "last_modified_date": "2024-02-01",
+            "status": "Published"
+        },
+        {
+            "id": "CVE-2023-67890",
+            "description": "Another vulnerability details",
+            "published_date": "2023-11-20",
+            "last_modified_date": "2024-01-10",
+            "status": "Modified"
+        }
+    ]
+}
+```
