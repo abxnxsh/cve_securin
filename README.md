@@ -173,6 +173,28 @@ Get CVE Details
 
         POST /cves/sync
 
+## **Endpoints**
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/` | Home route - Displays total CVE records in the database |
+| `GET` | `/cves/list` | Fetches a paginated list of CVEs with filtering and sorting options |
+| `GET` | `/cves/<cve_id>` | Fetches details of a specific CVE |
+| `GET` | `/cves/update` | Triggers an update process to fetch new CVEs from the NVD API |
+
+---
+
+## **Home Route**
+### **`GET /`**
+#### **Description**  
+Displays the total number of CVE records stored in the database.
+
+#### **Response Example**
+```json
+{
+    "total_records": 350
+}
+
 
 
 
