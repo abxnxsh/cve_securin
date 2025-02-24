@@ -190,19 +190,7 @@ Fetches detailed information about a specific CVE.
     ]
 }
 ```
-## **Update CVE Data**
-### **`GET /cves/update`**
-#### **Description**  
-Triggers the process to fetch and store new CVEs from the NVD API.
 
-#### **Request Example**
-
-#### **Response Example**
-```json
-{
-    "message": "Fetching new CVEs from NVD API..."
-}
-```
 ## **Error Responses**
 | Status Code | Message | Description |
 |------------|---------|-------------|
