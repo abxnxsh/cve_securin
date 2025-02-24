@@ -170,7 +170,7 @@ Fetches detailed information about a specific CVE.
 ```json
 {
     "id": "CVE-2023-12345",
-    "description": "Some vulnerability details",
+    "description": "cve@mitre.org",
     "published_date": "2023-10-15",
     "last_modified_date": "2024-02-01",
     "status": "Published",
