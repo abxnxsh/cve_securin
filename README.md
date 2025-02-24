@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/10ecb83c-e8e2-4a5e-a9d1-65f30a52d193)# Assessment
+# Assessment
 
 ## **About**
 
