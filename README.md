@@ -86,7 +86,7 @@ This project involves consuming CVE data from the National Vulnerability Databas
      
       ![image](https://github.com/user-attachments/assets/dba3b665-6adb-4bcf-a8a8-881cc05b169b)
 
-7. **API Documentation**:
+# 7. **API Documentation**:
   
 ## **Endpoints**
 
