@@ -42,7 +42,8 @@ This project involves consuming CVE data from the National Vulnerability Databas
      - Published Date (ascending/descending)
      - Last Modified Date (ascending/descending)
 
-   ![image](https://github.com/user-attachments/assets/4b5abf26-9812-4574-adf6-0fc643c93409)
+   ![image](https://github.com/user-attachments/assets/c9f32c9a-d843-4c57-a392-e554b8cecd99)
+
 
 
 5. **Filtering**:
