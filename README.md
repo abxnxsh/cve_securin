@@ -18,7 +18,8 @@ This project involves consuming CVE data from the National Vulnerability Databas
    - Stores the data in a PostgreSQL database with tables for CVEs, CVSS metrics, and CPE detail
   
 
-   ![image](https://github.com/user-attachments/assets/de0caecf-2da1-4a17-94f5-e5e941299aa7)
+   ![image](https://github.com/user-attachments/assets/40954ef7-f69b-4a08-83fc-4b41f1238839)
+
 
 
 
