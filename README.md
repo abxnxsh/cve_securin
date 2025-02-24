@@ -224,15 +224,15 @@ Fetches a list of CVEs with optional pagination, sorting, and filtering.
     "cves": [
         {
             "id": "CVE-2023-12345",
-            "description": "Some vulnerability details",
-            "published_date": "2023-10-15",
+            "description": "cve@mitre.org",
+            "published_date": "1996-10-15",
             "last_modified_date": "2024-02-01",
             "status": "Published"
         },
         {
             "id": "CVE-2023-67890",
-            "description": "Another vulnerability details",
-            "published_date": "2023-11-20",
+            "description": "cve@mitre.org",
+            "published_date": "1998-11-20",
             "last_modified_date": "2024-01-10",
             "status": "Modified"
         }
