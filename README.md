@@ -95,7 +95,7 @@ This project involves consuming CVE data from the National Vulnerability Databas
 | `GET` | `/` | Home route - Displays total CVE records in the database |
 | `GET` | `/cves/list` | Fetches a paginated list of CVEs with filtering and sorting options |
 | `GET` | `/cves/<cve_id>` | Fetches details of a specific CVE |
-| `GET` | `/cves/update` | Triggers an update process to fetch new CVEs from the NVD API |
+
 
 ---
 
