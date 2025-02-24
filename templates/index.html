@@ -5,53 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CVE List</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f8f9fa;
+        }
+        h1, h3 {
+            text-align: left;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
         }
         th, td {
-            padding: 10px;
+            padding: 12px;
             border: 1px solid #ddd;
             text-align: left;
         }
         th {
-            background-color: #f4f4f4;
+            background-color: #353739;
+            color: white;
         }
         tr:hover {
-            background-color: #f9f9f9;
+            background-color: #f1f1f1;
             cursor: pointer;
-        }
-        label {
-            margin-top: 20px;
-            display: inline-block;
         }
         .controls {
             display: flex;
-            justify-content: space-between; 
-            align-items: center; 
+            justify-content: space-between;
+            align-items: center;
             margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            margin-top: 15px;
+        }
+        label {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        select, input {
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: white;
         }
         .pagination {
             display: flex;
             align-items: center;
+            gap: 5px;
         }
         .pagination button {
-            margin: 0 2px;
-            padding: 5px 10px;
+            padding: 6px 12px;
+            border: 1px solid #131314;
+            background-color: white;
             cursor: pointer;
-            border: 1px solid #ddd;
-            background-color: #f4f4f4;
-            border-radius: 3px;
+            border-radius: 4px;
+            color: #3c3f42;
+            font-weight: bold;
+        }
+        .pagination button.active {
+            background-color: #4d5155;
+            color: white;
         }
         .pagination button:disabled {
             cursor: not-allowed;
             opacity: 0.5;
-        }
-        .pagination button.active {
-            background-color: #007bff;
-            color: white;
-            border-color: #007bff;
         }
     </style>
 </head>
@@ -60,29 +91,50 @@
     <h3 style="text-align: left;">Total CVE Records: {{ total_records }}</h3>
 
 
-    <label>
-        Sort By:
-        <select id="sort-by" onchange="fetchCVEData()">
-            <option value="published_date">Published Date</option>
-            <option value="last_modified_date">Last Modified Date</option>
-        </select>
-    </label>
+    <div class="filter-container">
+        <label>
+            Sort By:
+            <select id="sort-by" onchange="fetchCVEData()">
+                <option value="published_date">Published Date</option>
+                <option value="last_modified_date">Last Modified Date</option>
+            </select>
+        </label>
 
-    <label>
-        Sort Order:
-        <select id="sort-order" onchange="fetchCVEData()">
-            <option value="desc">Descending</option>
-            <option value="asc">Ascending</option>
-        </select>
-    </label>
+        <label>
+            Sort Order:
+            <select id="sort-order" onchange="fetchCVEData()">
+                <option value="desc">Descending</option>
+                <option value="asc">Ascending</option>
+            </select>
+        </label>
 
-    <label>
-        Filter by Year:
-        <input type="text" id="year" onchange="fetchCVEData()">
-    </label>
+        <label>
+            Filter By:
+            <select id="filter-type" onchange="fetchCVEData()">
+                <option value="published_date">Published Date</option>
+                <option value="last_modified_date">Last Modified Date</option>
+            </select>
+        </label>
+
+     
+        <label>
+            Date:
+            <input type="text" id="year" onchange="fetchCVEData()" placeholder="Enter year (e.g., 2023)">
+        </label>
 
 
+        <label>
+            CVSS Score:
+            <input type="number" id="cvss-score" onchange="fetchCVEData()" placeholder="Enter CVSS score (e.g., 7.5)">
+        </label>
 
+        <label>
+            CVE ID:
+            <input type="text" id="cve-id" onchange="fetchCVEData()" placeholder="Enter CVE ID (e.g., CVE-2023-1234)">
+        </label>
+    </div>
+
+    
     <table>
         <thead>
             <tr>
@@ -94,7 +146,7 @@
             </tr>
         </thead>
         <tbody id="cve-table">
-           
+        
         </tbody>
     </table>
 
@@ -109,10 +161,11 @@
             </select>
         </label>
 
+        
         <div class="pagination">
             <button id="prev-page" onclick="changePage(currentPage - 1)" disabled>←</button>
             <div id="page-numbers">
-               
+       
             </div>
             <button id="next-page" onclick="changePage(currentPage + 1)" disabled>→</button>
         </div>
@@ -121,20 +174,25 @@
     <script>
         let currentPage = 1;
         let totalPages = 1;
-        let currentBatch = 1; 
+        let currentBatch = 1;
 
         async function fetchCVEData(page = 1) {
             const perPage = document.getElementById("per-page").value;
             const sortBy = document.getElementById("sort-by").value;
             const sortOrder = document.getElementById("sort-order").value;
+            const filterType = document.getElementById("filter-type").value;
             const year = document.getElementById("year").value;
+            const cvssScore = document.getElementById("cvss-score").value;
+            const cveId = document.getElementById("cve-id").value;
 
-            const response = await fetch(`/cves/list?page=${page}&per_page=${perPage}&sort_by=${sortBy}&sort_order=${sortOrder}&year=${year}`);
+            const response = await fetch(
+                `/cves/list?page=${page}&per_page=${perPage}&sort_by=${sortBy}&sort_order=${sortOrder}&filter_type=${filterType}&year=${year}&cvss_score=${cvssScore}&cve_id=${cveId}`
+            );
             const data = await response.json();
             const tableBody = document.getElementById("cve-table");
             tableBody.innerHTML = "";
 
-           
+            
             data.cves.forEach(cve => {
                 const row = document.createElement("tr");
                 row.onclick = () => window.location.href = `/cves/${cve[0]}`;
@@ -162,7 +220,7 @@
                 tableBody.appendChild(row);
             });
 
-   
+           
             totalPages = Math.ceil(data.total / perPage);
             updatePaginationControls(page, totalPages);
         }
@@ -171,12 +229,10 @@
             const pageNumbers = document.getElementById("page-numbers");
             pageNumbers.innerHTML = "";
 
-    
             const batchSize = 4;
             const startPage = (currentBatch - 1) * batchSize + 1;
             const endPage = Math.min(startPage + batchSize - 1, totalPages);
 
-            
             for (let i = startPage; i <= endPage; i++) {
                 const pageButton = document.createElement("button");
                 pageButton.textContent = i;
@@ -186,7 +242,7 @@
                 pageNumbers.appendChild(pageButton);
             }
 
-            
+      
             document.getElementById("prev-page").disabled = currentPage === 1;
             document.getElementById("next-page").disabled = currentPage === totalPages;
         }
@@ -198,12 +254,14 @@
             if (newPage > currentBatch * batchSize) {
                 currentBatch++;
             } else if (newPage <= (currentBatch - 1) * batchSize) {
-                currentBatch--; 
+                currentBatch--;
             }
 
             currentPage = newPage;
             fetchCVEData(currentPage);
         }
+
+      
         fetchCVEData();
     </script>
 </body>

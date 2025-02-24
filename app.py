@@ -73,7 +73,7 @@ init_db()
 
 
 NVD_API_URL = "https://services.nvd.nist.gov/rest/json/cves/2.0"
-API_KEY = "c3ec834e-d046-4348-9687-d0dc11ddf155"
+# API_KEY = "c3ec834e-d046-4348-9687-d0dc11ddf155"
 
 
 def fetch_and_store_cves():
@@ -83,7 +83,7 @@ def fetch_and_store_cves():
     total_fetched = 0
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
-        "apiKey": API_KEY,
+        # "apiKey": API_KEY,
     }
 
     while total_fetched < max_cves_to_fetch:
@@ -242,19 +242,36 @@ def cve_list():
     per_page = int(request.args.get("per_page", 10))
     sort_by = request.args.get("sort_by", "published_date")
     sort_order = request.args.get("sort_order", "desc")
+    filter_type = request.args.get("filter_type", "published_date") 
     year = request.args.get("year")
+    cvss_score = request.args.get("cvss_score")
+    cve_id = request.args.get("cve_id")
 
     conn = get_db_connection()
     cur = conn.cursor()
 
-    query = "SELECT * FROM cves"
+    query = """
+        SELECT cves.* 
+        FROM cves
+        LEFT JOIN cvss_metrics ON cves.id = cvss_metrics.cve_id
+        WHERE 1=1
+    """
     filters = []
 
     if year:
-        filters.append(f"published_date LIKE '{year}%'")
+        if filter_type == "published_date":
+            filters.append(f"cves.published_date LIKE '{year}%'")
+        elif filter_type == "last_modified_date":
+            filters.append(f"cves.last_modified_date LIKE '{year}%'")
+
+    if cvss_score:
+        filters.append(f"cvss_metrics.base_score = {float(cvss_score)}")
+
+    if cve_id:
+        filters.append(f"cves.id = '{cve_id}'")
 
     if filters:
-        query += " WHERE " + " AND ".join(filters)
+        query += " AND " + " AND ".join(filters)
 
     query += f" ORDER BY {sort_by} {sort_order} LIMIT {per_page} OFFSET {(page-1) * per_page};"
     cur.execute(query)
